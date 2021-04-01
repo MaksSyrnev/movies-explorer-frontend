@@ -2,22 +2,47 @@
   margin: 0;
   padding: 0;
   height: 74px;
-  background: #5c5c5c;
 }
 
- .logo {
-   width: 38px;
-   height: 38px;
-   margin: auto auto auto 0;
-   padding: 0;
- }
+.header_back_dark {
+  background: #5c5c5c;
+}
 
  .header__menu {
   margin: auto;
   padding: 0 70px;
-  display: flex;
   height: 74px;
   max-width: 1280px;
+  display: flex;
   justify-content: start;
   box-sizing: border-box;
+}
+
+.logo {
+  width: 38px;
+  height: 38px;
+  margin: auto auto auto 0;
+  padding: 0;
+}
+
+.logo__link {
+  margin: auto auto auto 0;
+  padding: 0;
+  transition: 0.8s;
+}
+
+.logo__link:hover {
+  opacity: .6;
+}
+
+@media all and (max-width: 832px) {
+  .header__menu {
+    padding: 0 30px;
+  }
+}
+
+@media all and (max-width: 432px) {
+  .header__menu {
+    padding: 0 14px;
+  }
 }

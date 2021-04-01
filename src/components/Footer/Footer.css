@@ -60,3 +60,50 @@
 .footer__link:hover {
   opacity: .6;
 }
+
+@media all and (max-width: 832px) {
+  .footer__content {
+    padding: 0px 30px;
+  }
+}
+
+@media all and (max-width: 502px) {
+  .footer__content {
+    padding: 0px 10px;
+  }
+}
+
+@media all and (max-width: 432px) {
+  .footer {
+    height: 320px;
+  }
+
+  .footer__content {
+    font-size: 13px;
+    line-height: 16px;
+  }
+
+  .footer__contact {
+    height: 154px;
+    display: block;
+    position: relative;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  .footer__links {
+    display: block;
+    margin: 30px auto;
+  }
+
+  .footer__links-item {
+    height: 15px;
+    padding: 0;
+    margin: 0 0 0 12px;
+  }
+  .footer__copyright {
+    margin: 10px auto;
+  }
+}

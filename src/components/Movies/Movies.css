@@ -1,0 +1,20 @@
+.movies {
+  margin: 0 auto;
+  padding: 0 70px;
+  max-width: 1280px;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+@media all and (max-width: 832px) {
+  .movies {
+    padding: 0 30px;
+  }
+}
+
+@media all and (max-width: 432px) {
+  .movies {
+    padding: 0 10px;
+  }
+}

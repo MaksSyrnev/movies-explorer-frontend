@@ -3,3 +3,11 @@
   font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
   box-sizing: border-box;
 }
+
+.footer__hide {
+  display: none;
+}
+
+.header__hide {
+  display: none;
+}
