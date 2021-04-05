@@ -82,6 +82,11 @@
 }
 
 @media all and (max-width: 652px) {
+  .movies-card__title {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
   .movies-card__subtitle {
     margin: 0 0 20px;
   }
@@ -93,6 +98,10 @@
     height: 232px;
     width: 300px;
     margin: 0px auto 20px;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
   }
 
   .card__text {

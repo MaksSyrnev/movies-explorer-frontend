@@ -5,17 +5,13 @@ import logoPath from '../../images/logo.svg'
 import Navigation from '../Navigation/Navigation';
 
 function Header(props) {
-  const { onLinkReg, onLinkProfile, onLinkHome, onLinkMovies, back } = props;
-
-  function handleClickLogo() {
-    onLinkHome(true);
-  }
+  const { back } = props;
 
   return (
     <header className={`header ${back ? 'header_back_dark' : ''}`}>
       <div className="header__menu">
-        <Link to="/" className="logo__link" ><img src={logoPath} alt="логотип" className="logo" onClick={handleClickLogo} /></Link>
-        <Navigation onLinkReg={onLinkReg} onLinkProfile={onLinkProfile} onLinkMovies={onLinkMovies} back={back} />
+        <Link to="/" className="logo__link"><img src={logoPath} alt="логотип" className="logo" /></Link>
+        <Navigation back={back} />
       </div>
 
     </header>

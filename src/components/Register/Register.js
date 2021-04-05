@@ -3,15 +3,11 @@ import { Link } from 'react-router-dom';
 import './Register.css';
 import logoPath from '../../images/logo.svg'
 
-function Register(props) {
-
-  function handleClickLogo() {
-    props.onLinkHome(true);
-  }
+function Register() {
 
   return (
     <section className="register">
-      <Link to="/" className="logo__link"><img src={logoPath} alt="логотип" className="logo form-reg__logo" onClick={handleClickLogo} /></Link>
+      <Link to="/" className="logo__link"><img src={logoPath} alt="логотип" className="logo form-reg__logo" /></Link>
       <form name="register" method="GET" action="#" className="form-reg" >
         <h2 className="form-reg__title">Добро пожаловать!</h2>
         <label className="form-reg__label">Имя</label>

@@ -75,35 +75,39 @@
 
 @media all and (max-width: 432px) {
   .footer {
-    height: 320px;
+    height: 270px;
   }
-
   .footer__content {
-    font-size: 13px;
-    line-height: 16px;
+    font-size: 12px;
+    line-height: 15px;
   }
 
   .footer__contact {
-    height: 154px;
-    display: block;
-    position: relative;
-    text-align: center;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    align-items: center;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
   }
 
   .footer__links {
-    display: block;
     margin: 30px auto;
+    flex-direction: column;
+    align-items: center;
   }
 
   .footer__links-item {
     height: 15px;
     padding: 0;
-    margin: 0 0 0 12px;
+    margin-bottom: 12px;
   }
+
+  .footer__links-item:last-of-type {
+    margin-bottom: 0;
+  }
+
   .footer__copyright {
-    margin: 10px auto;
+    margin: 0 auto 10px;
   }
 }

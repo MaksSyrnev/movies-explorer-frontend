@@ -86,3 +86,36 @@
     width: 27px;
   }
 }
+
+@media all and (max-width: 608px) {
+  .portfolio {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+@media all and (max-width: 542px) {
+  .portfolio__nav {
+    font-size: 18px;
+    line-height: 28px;
+    margin-top: 20px;
+  }
+
+  .portfolio__button {
+    width: 18px;
+    margin: 5px 0 6px;
+  }
+
+  .portfolio__title {
+    margin: 0 0 20px;
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+
+@media all and (max-width: 502px) {
+  .portfolio {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}

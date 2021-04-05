@@ -40,3 +40,7 @@
 .filter-checkbox__input:checked + .filter-checkbox__input_visible {
   background-position: right;
 }
+
+.filter-checkbox__input_visible:hover {
+  cursor: pointer;
+}

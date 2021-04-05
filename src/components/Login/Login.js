@@ -3,15 +3,11 @@ import { Link } from 'react-router-dom';
 import './Login.css';
 import logoPath from '../../images/logo.svg'
 
-function Login(props) {
-
-  function handleClickLogo() {
-    props.onLinkHome(true);
-  }
+function Login() {
 
   return (
     <section className="login">
-      <Link to="/" className="logo__link"><img src={logoPath} alt="логотип" className="logo form-login__logo" onClick={handleClickLogo} /></Link>
+      <Link to="/" className="logo__link"><img src={logoPath} alt="логотип" className="logo form-login__logo" /></Link>
       <form name="login" method="GET" action="#" className="form-login" >
         <h2 className="form-login__title">Рады видеть!</h2>
         <label className="form-login__label">E-mail</label>
