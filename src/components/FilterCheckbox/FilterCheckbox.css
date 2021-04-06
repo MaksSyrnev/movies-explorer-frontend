@@ -1,0 +1,46 @@
+.filter-checkbox {
+  display: flex;
+  justify-content: center;
+}
+
+.filter-checkbox__label {
+  margin:  auto 0 auto 7px;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 18px;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.filter-checkbox__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.filter-checkbox__input_visible {
+  margin: auto 12px auto 0;
+  display: inline-block;
+  vertical-align: middle;
+  width: 34px;
+  height: 14px;
+  border: 1px solid #2be080;
+  border-radius: 20px;
+  background-color: #2be080;
+  background-image: url(../../images/tumb.svg);
+  background-repeat: no-repeat;
+  background-position: left;
+  transition: 0.1s;
+}
+
+.filter-checkbox__input:checked + .filter-checkbox__input_visible {
+  background-position: right;
+}
+
+.filter-checkbox__input_visible:hover {
+  cursor: pointer;
+}
