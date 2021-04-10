@@ -1,6 +1,5 @@
 import React from 'react';
 import './Movies.css';
-import Preloader from '../Preloader/Preloader';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SavedMovies from '../SavedMovies/SavedMovies';
@@ -8,10 +7,10 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
 function Movies(props) {
-  const { hide, back } = props;
+  const { hide, back, moviesData, onSearch, preloader, errloader } = props;
   let movies = false;
   let saved = true;
-  let preloader = true;
+  //let preloader = true;
 
   if (hide === "movies") {
     movies = true;
@@ -22,10 +21,9 @@ function Movies(props) {
     <>
       <Header back={back} />
       <section className="movies">
-        <SearchForm />
-        <MoviesCardList hide={movies} />
+        <SearchForm onSearch={onSearch} />
+        <MoviesCardList hide={movies} moviesData={moviesData} preloader={preloader} errloader={errloader} />
         <SavedMovies hide={saved} />
-        <Preloader hide={preloader} />
       </section>
       <Footer />
     </>
