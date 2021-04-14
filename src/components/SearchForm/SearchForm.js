@@ -29,7 +29,7 @@ function SearchForm(props) {
         <button type="submit" className="search-form__button_submit" onClick={handleClickSearchButton}>Найти</button>
         <span className="search-form__input-error" id="search-form-error">{inputErr}</span>
       </form>
-      <FilterCheckbox />
+      <FilterCheckbox filterShort={props.filterShort} />
     </div>
   );
 }

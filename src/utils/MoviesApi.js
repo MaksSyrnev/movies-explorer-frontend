@@ -13,12 +13,6 @@ class MovieApi {
     return fetch(`${this.baseUrl}`, { headers: this.headers })
       .then(this.getResponse);
   }
-
-  setMovies() {
-    let t = localStorage.getItem('token');
-    this.headers.Authorization = `Bearer ${t}`;
-  }
-
 }
 
 const movieApi = new MovieApi({

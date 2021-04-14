@@ -11,7 +11,7 @@ import Header from '../Header/Header';
 function Main(props) {
   return (
     <>
-      <Header back={props.back} />
+      <Header isLogged={props.isLogged} />
       <main className="content">
         <Promo />
         <AboutProject />

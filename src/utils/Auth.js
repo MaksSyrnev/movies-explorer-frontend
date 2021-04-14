@@ -38,22 +38,8 @@ class AuthApi {
 const authApi = new AuthApi({
   baseUrl: 'https://api.onemoredog.space',
   headers: {
-    /* "Authorization": `Bearer ${localStorage.getItem('token')}`, */
     "Content-Type": "application/json",
   },
 });
 
 export default authApi;
-
-// const BASE_URL = 'https://api.onemoredog.space';
-
-// export function getContent(jwt) {
-//   return fetch(`${BASE_URL}/users/me`, {
-//     method: 'GET',
-//     headers: {
-//       "Content-Type": "application/json",
-//       "Authorization": `Bearer ${jwt}`
-//     }
-//   })
-//     .then(getResponse);
-// };

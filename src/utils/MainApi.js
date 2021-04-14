@@ -1,6 +1,5 @@
 class Api {
   constructor(options) {
-    // тело конструктора
     this.baseUrl = options.baseUrl;
     this.headers = options.headers;
   }
@@ -9,65 +8,59 @@ class Api {
     return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  getInitialCards() {
-    return fetch(`${this.baseUrl}/cards`, { headers: this.headers })
-      .then(this.getResponse);
-  }
-
-  createPost(newCard) {
-    return fetch(`${this.baseUrl}/cards`, {
-      method: 'POST',
-      body: JSON.stringify({
-        name: newCard.name,
-        link: newCard.link
-      }),
-      headers: this.headers
-    }).then(this.getResponse);
-  }
-
-  deletePost(cardId) {
-    return fetch(`${this.baseUrl}/cards/${cardId}`, {
-      method: 'DELETE',
-      headers: this.headers,
-    }).then(this.getResponse);
-  }
-
-  changeLikeCardStatus(cardID, like) {
-    return fetch(`${this.baseUrl}/cards/${cardID}/likes`, {
-      method: like ? 'PUT' : 'DELETE',
-      headers: this.headers,
-    }).then(this.getResponse);
-  }
-
   getUserInfo() {
     return fetch(`${this.baseUrl}/users/me`, { headers: this.headers })
       .then(this.getResponse);
   }
 
-  saveUserInfo(userInfo) {
+  editUser(name, email) {
     return fetch(`${this.baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this.headers,
       body: JSON.stringify({
-        name: userInfo.name,
-        about: userInfo.about,
+        name: name,
+        email: email,
       }),
     }).then(this.getResponse);
   }
 
-  setUserAvatar(userInfo) {
-    return fetch(`${this.baseUrl}/users/me/avatar`, {
-      method: 'PATCH',
+  getSavedMovies() {
+    return fetch(`${this.baseUrl}/movies`, { headers: this.headers })
+      .then(this.getResponse);
+  }
+
+  deleteMovie(movieId) {
+    return fetch(`${this.baseUrl}/movies/${movieId}`, {
+      method: 'DELETE',
       headers: this.headers,
-      body: JSON.stringify({
-        avatar: userInfo.avatar,
-      }),
     }).then(this.getResponse);
   }
 
-  setToken() {
-    let t = localStorage.getItem('token');
-    this.headers.Authorization = `Bearer ${t}`;
+  saveMovie(newMovie) {
+    return fetch('https://api.onemoredog.space/movies', {
+      method: 'POST',
+      body: JSON.stringify({
+        country: newMovie.country,
+        director: newMovie.director,
+        duration: newMovie.duration,
+        year: newMovie.year,
+        description: newMovie.description,
+        image: newMovie.image,
+        trailer: newMovie.trailer,
+        nameRU: newMovie.nameRU,
+        nameEN: newMovie.nameEN,
+        thumbnail: newMovie.image,
+        movieId: newMovie.movieId
+      }),
+      headers: this.headers
+    }).then(this.getResponse);
+  }
+
+  changeSavedMovieStatus(movieId, like) {
+    return fetch(`${this.baseUrl}/movies/${movieId}`, {
+      method: like ? 'PUT' : 'DELETE',
+      headers: this.headers,
+    }).then(this.getResponse);
   }
 
 }

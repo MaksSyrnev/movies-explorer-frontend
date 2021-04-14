@@ -7,6 +7,7 @@ function Register(props) {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [pass, setPass] = React.useState('');
+  const [vEmail, setVEmail] = React.useState('false');
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -19,10 +20,17 @@ function Register(props) {
 
   function handleChangeEmail(e) {
     setEmail(e.target.value);
+    validEmail(email);
   }
 
   function handleChangePass(e) {
     setPass(e.target.value);
+  }
+
+  function validEmail(v) {
+    const regex = /^[a-z0-9A-z-]*@[a-z0-9A-z-]*\.[a-z0-9A-z-]*/;
+    let vl = regex.test(v);
+    setVEmail(vl);
   }
 
   return (
@@ -31,15 +39,19 @@ function Register(props) {
       <form name="register" method="GET" action="#" className="form-reg" onSubmit={handleSubmit}>
         <h2 className="form-reg__title">Добро пожаловать!</h2>
         <label className="form-reg__label">Имя</label>
-        <input type="text" name="name" className="form-reg__input" value={name} onChange={handleChangeName}
+        <input type="text" name="name" className="form-reg__input" value={name || ''} onChange={handleChangeName}
           minLength="2" maxLength="30" required />
+        <span className="form-reg__err form-reg__err_hide">заполнитель</span>
         <label className="form-reg__label">E-mail</label>
-        <input type="email" name="email" className="form-reg__input" value={email} onChange={handleChangeEmail}
+        <input type="email" name="email" className="form-reg__input" value={email || ''} onChange={handleChangeEmail}
           required />
+        {!vEmail ? <span className="form-reg__err">не  похоже на Email</span>
+          : <span className="form-reg__err form-reg__err_hide">заполнитель</span>}
         <label className="form-reg__label">Пароль</label>
-        <input type="password" name="password" className="form-reg__input" value={pass} onChange={handleChangePass}
+        <input type="password" name="password" className="form-reg__input" value={pass || ''} onChange={handleChangePass}
           required />
-        <button type="submit" className="form-reg__button">Зарегистрироваться</button>
+        <span className="form-reg__err form-reg__err_hide">заполнитель</span>
+        <button type="submit" className="form-reg__button" disabled>Зарегистрироваться</button>
         <p className="form-reg__text">Уже зарегистрированы? <Link to="/signin" className="form-reg__link">Войти</Link></p>
       </form>
     </section>
