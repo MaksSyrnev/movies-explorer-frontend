@@ -51,7 +51,7 @@ function Register(props) {
         <input type="password" name="password" className="form-reg__input" value={pass || ''} onChange={handleChangePass}
           required />
         <span className="form-reg__err form-reg__err_hide">заполнитель</span>
-        <button type="submit" className="form-reg__button" disabled>Зарегистрироваться</button>
+        <button type="submit" className="form-reg__button" >Зарегистрироваться</button>
         <p className="form-reg__text">Уже зарегистрированы? <Link to="/signin" className="form-reg__link">Войти</Link></p>
       </form>
     </section>
