@@ -8,6 +8,11 @@ class Api {
     return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
   }
 
+  setToken() {
+    let t = localStorage.getItem('token');
+    this.headers.Authorization = `Bearer ${t}`;
+  }
+
   getUserInfo() {
     return fetch(`${this.baseUrl}/users/me`, { headers: this.headers })
       .then(this.getResponse);

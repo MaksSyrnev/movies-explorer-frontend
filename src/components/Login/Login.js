@@ -6,6 +6,9 @@ import logoPath from '../../images/logo.svg'
 function Login(props) {
   const [email, setEmail] = React.useState('');
   const [pass, setPass] = React.useState('');
+  const [isValidEmail, setIsValidEmail] = React.useState('false');
+  const [isValidPass, setIsValidPass] = React.useState('false');
+  const [submintDisabled, setSubmintDisabled] = React.useState('false');
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -16,9 +19,35 @@ function Login(props) {
     setEmail(e.target.value);
   }
 
+  React.useEffect(() => {
+    validEmail(email);
+  }, [email])
+
   function handleChangePass(e) {
     setPass(e.target.value);
   }
+
+  React.useEffect(() => {
+    validPass(pass);
+  }, [pass])
+
+  function validEmail(valueInput) {
+    const regex = /^[a-z0-9A-z-]*@[a-z0-9A-z-]*\.[a-z0-9A-z-]*/;
+    const isValid = regex.test(valueInput);
+    setIsValidEmail(isValid);
+  }
+
+  function validPass(valueInput) {
+    const isInputPassFilled = valueInput.length > 0;
+    const isValid = isInputPassFilled;
+    setIsValidPass(isValid);
+  }
+
+  React.useEffect(() => {
+    const isSubmintDisabled = !isValidEmail || !isValidPass;
+    setSubmintDisabled(isSubmintDisabled);
+  },
+    [isValidEmail, isValidPass]);
 
   return (
     <section className="login">
@@ -28,10 +57,14 @@ function Login(props) {
         <label className="form-login__label">E-mail</label>
         <input type="email" name="email" className="form-login__input" value={email} onChange={handleChangeEmail}
           required />
+        {!isValidEmail ? <span className="form-login__err">не  похоже на Email</span>
+          : <span className="form-login__err form-login__err_hide">заполнитель</span>}
         <label className="form-login__label">Пароль</label>
         <input type="password" name="password" className="form-login__input" value={pass} onChange={handleChangePass}
           required />
-        <button type="submit" className="form-login__button">Войти</button>
+        {!isValidPass ? <span className="form-login__err">обязательно заполните пароль</span>
+          : <span className="form-login__err form-login__err_hide">заполнитель</span>}
+        <button type="submit" className={` ${submintDisabled ? 'form-login__button_disabled' : 'form-login__button'}`} disabled={submintDisabled}>Войти</button>
         <p className="form-login__text">Ещё не зарегистрированы? <Link to="/signup" className="form-login__link">Регистрация</Link></p>
       </form>
 

@@ -71,6 +71,14 @@
   opacity: 0.8;
 }
 
+.form-reg__button_disabled {
+  margin: 129px auto 15px;
+  border-radius: 3px;
+  width: 100%;
+  height: 45px;
+  border: none;
+}
+
 .form-reg__text {
   margin: 0 auto;
   padding: 0;

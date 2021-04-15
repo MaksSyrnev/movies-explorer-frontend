@@ -22,6 +22,7 @@ function App() {
   const [resMovies, setResMovies] = useState([]);
   const [filtredArray, setFiltredArray] = useState([]);
   const [empty, setEmpty] = useState(false);
+  const [message, setMessage] = useState('');
 
   const history = useHistory();
 
@@ -30,6 +31,7 @@ function App() {
   }, []);
 
   React.useEffect(() => {
+    api.setToken();
     if (isLogged) {
       api.getUserInfo()
         .then((userData) => {
@@ -79,15 +81,17 @@ function App() {
     api.editUser(name, mail)
       .then((res) => {
         setCurrentUser(res);
+        setMessage('профиль обновился');
       })
       .catch((err) => {
+        setMessage('Что то пошло не так');
         console.log(err);
       });
   }
 
   function tokenCheck() {
-    let t = localStorage.getItem('token');
-    if (t) {
+    const jwt = localStorage.getItem('token');
+    if (jwt) {
       api.getUserInfo()
         .then((res) => {
           setIsLogged(true);
@@ -109,12 +113,12 @@ function App() {
     setPreloader(false);
     setErrloader(0);
     setEmpty(false);
-    let sWord = v;
-    let m = localStorage.getItem('movies');
-    if (!m) {
+    const sWord = v;
+    const movArr = localStorage.getItem('movies');
+    if (!movArr) {
       movieApi.getMovies()
         .then((res) => {
-          let movies = res.map(item => {
+          const movies = res.map(item => {
             let newItem = {};
             if (item.image) {
               newItem.country = item.country;
@@ -151,22 +155,21 @@ function App() {
           setTimeout(resMovieHandler, 1000, 1);
         });
     } else {
-      //setMoviesData(m);
       setTimeout(resMovieHandler, 1000, sWord);
     }
 
   }
 
-  function resMovieHandler(v) {
-    if (v === 1) {
+  function resMovieHandler(word) {
+    if (word === 1) {
       setErrloader(1);
       setPreloader(true);
     } else {
       setErrloader(0);
       setPreloader(true);
-      let m = JSON.parse(localStorage.getItem('movies'));
+      const startMovArr = JSON.parse(localStorage.getItem('movies'));
       // здесь должен быть поиск
-      let resArray = searching(m, v);
+      let resArray = searching(startMovArr, word);
       if (resArray.length === 0) {
         setEmpty(true);
       }
@@ -174,20 +177,19 @@ function App() {
     }
   }
 
-  function searching(m, w) {
+  function searching(inputMassive, word) {
     const moviesFiltered = [];
-    m.forEach(function (element) {
-      if (element.country) {
-        if (element.country.includes(w)) {
-          moviesFiltered.push(element);
-        }
+    inputMassive.forEach(function (element) {
+      const dataMovie = [element.country, element.description, element.director, element.nameEN, element.nameRU].join();
+      if (dataMovie.includes(word)) {
+        moviesFiltered.push(element);
       }
     });
     return moviesFiltered;
   }
 
-  function handleSearchShortButton(v) {
-    if (v) { // для тру
+  function handleSearchShortButton(check) {
+    if (check) { // для тру
       let shoortFiltredArray = [];
       if (resMovies.length > 0) {
         shoortFiltredArray = searchShort(resMovies);
@@ -201,9 +203,9 @@ function App() {
     }
   }
 
-  function searchShort(m) {
+  function searchShort(inputMassive) {
     const moviesFiltered = [];
-    m.forEach(function (element) {
+    inputMassive.forEach(function (element) {
       if (element.duration) {
         if (element.duration <= 40) {
           moviesFiltered.push(element);
@@ -213,18 +215,18 @@ function App() {
     return moviesFiltered;
   }
 
-  function handleSearchSavedMovie(v) {
-    let m = savedMovies;
+  function handleSearchSavedMovie(word) {
+    const startMovArr = savedMovies;
     // здесь должен быть поиск
-    let resArray = searching(m, v);
+    let resArray = searching(startMovArr, word);
     if (resArray.length === 0) {
       setEmpty(true);
     }
     setSavedMovies(resArray);
   }
 
-  function handleSearchShortSavedButton(v) {
-    if (v) { // для тру
+  function handleSearchShortSavedButton(valCheckBox) {
+    if (valCheckBox) { // для тру
       let shoortFiltredArray = [];
       if (savedMovies.length > 0) {
         shoortFiltredArray = searchShort(savedMovies);
@@ -238,8 +240,8 @@ function App() {
     }
   }
 
-  function handlerSaveMovie(m) {
-    api.saveMovie(m)
+  function handlerSaveMovie(movieData) {
+    api.saveMovie(movieData)
       .then((res) => {
         return api.getSavedMovies();
       })
@@ -251,10 +253,10 @@ function App() {
       });
   }
 
-  function handlerToggleSaveMovie(m) {
+  function handlerToggleSaveMovie(movieData) {
     let id;
     savedMovies.forEach(function (item) {
-      if (item.movieId === m) {
+      if (item.movieId === movieData) {
         id = item._id;
       }
     });
@@ -298,7 +300,7 @@ function App() {
           <ProtectedRoute path="/saved-movies" isLogged={isLogged} component={Movies} hide={'movies'} onSearch={handleSearchSavedMovie}
             savedMovies={savedMovies} delMovie={handlerDeleteMovie} filterShort={handleSearchShortSavedButton} />
 
-          <ProtectedRoute path="/profile" isLogged={isLogged} component={Profile} onEditProfile={editProfile} signOut={handleSignOut} />
+          <ProtectedRoute path="/profile" isLogged={isLogged} component={Profile} onEditProfile={editProfile} signOut={handleSignOut} message={message} />
 
           <Route path="/signin">
             <Login onLogin={getLogin} />

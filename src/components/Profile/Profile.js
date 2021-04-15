@@ -9,23 +9,72 @@ function Profile(props) {
   const [email, setEmail] = React.useState('');
   const currentUser = React.useContext(CurrentUserContext);
 
+  const [isValidEmail, setIsValidEmail] = React.useState('true');
+  const [isValidName, setIsValidName] = React.useState('true');
+  const [submintDisabled, setSubmintDisabled] = React.useState('true');
+  const [see, setSee] = React.useState('false');
+
+
   useEffect(() => {
     setName(currentUser.name);
     setEmail(currentUser.email);
   }, [currentUser]);
 
+  useEffect(() => {
+    setSee(true);
+    setTimeout(hideMessage, 2000);
+  }, [props.message]);
+
+  function hideMessage() {
+    setSee(false);
+  }
+
   function handleChangeName(e) {
     setName(e.target.value);
   }
+
+  React.useEffect(() => {
+    validName(name);
+  }, [name]);
 
   function handleChangeEmail(e) {
     setEmail(e.target.value);
   }
 
-  function handleEdit(e) {
+  React.useEffect(() => {
+    validEmail(email);
+  }, [email]);
+
+  function handleEditSubmit(e) {
     e.preventDefault();
     props.onEditProfile(name, email);
   }
+
+  function validEmail(valueInput) {
+    const regex = /^[a-z0-9A-z-]*@[a-z0-9A-z-]*\.[a-z0-9A-z-]*/;
+    const isValid = regex.test(valueInput);
+    setIsValidEmail(isValid);
+  }
+
+  function validName(valueInput) {
+    const regex = /[^-sa-zа-яё ]/i;
+    if (valueInput) {
+      const resValid = valueInput.match(regex);
+      if (resValid) {
+        setIsValidName(false);
+      } else {
+        setIsValidName(true);
+      }
+    }
+  }
+
+  React.useEffect(() => {
+    const isInputValid = !isValidEmail || !isValidName;
+    const newData = (currentUser.name !== name) || (currentUser.email !== email);
+    const isSubmintDisabled = isInputValid || !newData;
+    setSubmintDisabled(isSubmintDisabled);
+  },
+    [isValidEmail, isValidName, name, email, currentUser]);
 
   return (
     <>
@@ -43,9 +92,12 @@ function Profile(props) {
             <input type="email" name="email" className="form-profile__input" value={email || ''} onChange={handleChangeEmail}
               required />
           </div>
-          {/* <span className={`form-profile__button ${props.profileSaveHide ? 'form-profile__button_hide' : ''}`} onClick={handleSave}>Сохранить</span> */}
-          <button className={`form-profile__button form-profile__button_text `} onClick={handleEdit}>Редактировать</button>
-          <button className={`form-profile__button form-profile__button_text form-profile__button_red `} onClick={props.signOut}>Выйти из аккаунта</button>
+
+          {!isValidName && <span className="form-profile__err" > имя может содержать только буквы и дефис</span>}
+          {!isValidEmail && <span className="form-profile__err-email" > введите e-mail</span>}
+          {see && <span className="form-profile__err" > {props.message} </span>}
+          <button type="submit" className={`${submintDisabled ? 'form-profile__button_disabled' : 'form-profile__button form-profile__button_text'} `} onClick={handleEditSubmit} disabled={submintDisabled}>Редактировать</button>
+          <button type="button" className={`form-profile__button form-profile__button_text form-profile__button_red `} onClick={props.signOut}>Выйти из аккаунта</button>
         </form>
       </section>
     </>

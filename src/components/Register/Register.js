@@ -7,7 +7,10 @@ function Register(props) {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [pass, setPass] = React.useState('');
-  const [vEmail, setVEmail] = React.useState('false');
+  const [isValidEmail, setIsValidEmail] = React.useState('false');
+  const [isValidName, setIsValidName] = React.useState('false');
+  const [isValidPass, setIsValidPass] = React.useState('false');
+  const [submintDisabled, setSubmintDisabled] = React.useState('false');
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -18,20 +21,53 @@ function Register(props) {
     setName(e.target.value);
   }
 
+  React.useEffect(() => {
+    validName(name);
+  }, [name]);
+
   function handleChangeEmail(e) {
     setEmail(e.target.value);
-    validEmail(email);
   }
+
+  React.useEffect(() => {
+    validEmail(email);
+  }, [email]);
 
   function handleChangePass(e) {
     setPass(e.target.value);
   }
 
-  function validEmail(v) {
+  React.useEffect(() => {
+    validPass(pass);
+  }, [pass]);
+
+  function validEmail(valueInput) {
     const regex = /^[a-z0-9A-z-]*@[a-z0-9A-z-]*\.[a-z0-9A-z-]*/;
-    let vl = regex.test(v);
-    setVEmail(vl);
+    const isValid = regex.test(valueInput);
+    setIsValidEmail(isValid);
   }
+
+  function validName(valueInput) {
+    const regex = /[^-sa-zа-яё ]/i;
+    const resValid = valueInput.match(regex);
+    if (resValid) {
+      setIsValidName(false);
+    } else {
+      setIsValidName(true);
+    }
+  }
+
+  function validPass(valueInput) {
+    const isInputPassFilled = valueInput.length > 0;
+    const isValid = isInputPassFilled;
+    setIsValidPass(isValid);
+  }
+
+  React.useEffect(() => {
+    const isSubmintDisabled = !isValidEmail || !isValidName || !isValidPass;
+    setSubmintDisabled(isSubmintDisabled);
+  },
+    [isValidEmail, isValidName, isValidPass]);
 
   return (
     <section className="register">
@@ -41,17 +77,19 @@ function Register(props) {
         <label className="form-reg__label">Имя</label>
         <input type="text" name="name" className="form-reg__input" value={name || ''} onChange={handleChangeName}
           minLength="2" maxLength="30" required />
-        <span className="form-reg__err form-reg__err_hide">заполнитель</span>
+        {!isValidName ? <span className="form-reg__err">имя может содержать только буквы и дефис</span>
+          : <span className="form-reg__err form-reg__err_hide">заполнитель</span>}
         <label className="form-reg__label">E-mail</label>
         <input type="email" name="email" className="form-reg__input" value={email || ''} onChange={handleChangeEmail}
           required />
-        {!vEmail ? <span className="form-reg__err">не  похоже на Email</span>
+        {!isValidEmail ? <span className="form-reg__err">не  похоже на Email</span>
           : <span className="form-reg__err form-reg__err_hide">заполнитель</span>}
         <label className="form-reg__label">Пароль</label>
         <input type="password" name="password" className="form-reg__input" value={pass || ''} onChange={handleChangePass}
           required />
-        <span className="form-reg__err form-reg__err_hide">заполнитель</span>
-        <button type="submit" className="form-reg__button" >Зарегистрироваться</button>
+        {!isValidPass ? <span className="form-reg__err">обязательно заполните пароль</span>
+          : <span className="form-reg__err form-reg__err_hide">заполнитель</span>}
+        <button type="submit" className={` ${submintDisabled ? 'form-reg__button_disabled' : 'form-reg__button'}`} disabled={submintDisabled}>Зарегистрироваться</button>
         <p className="form-reg__text">Уже зарегистрированы? <Link to="/signin" className="form-reg__link">Войти</Link></p>
       </form>
     </section>
