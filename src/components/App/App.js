@@ -23,6 +23,7 @@ function App() {
   const [filtredArray, setFiltredArray] = useState([]);
   const [empty, setEmpty] = useState(false);
   const [message, setMessage] = useState('');
+  const [currentSaveMovies, setCurrentSaveMovies] = useState([]);
 
   const history = useHistory();
 
@@ -31,11 +32,16 @@ function App() {
   }, []);
 
   React.useEffect(() => {
+    setCurrentSaveMovies(savedMovies);
+  }, [savedMovies]);
+
+  React.useEffect(() => {
     api.setToken();
     if (isLogged) {
       api.getUserInfo()
         .then((userData) => {
           setCurrentUser(userData);
+          setIsLogged(true);
         }).catch((err) => {
           console.log(err);
         });
@@ -43,6 +49,7 @@ function App() {
       api.getSavedMovies()
         .then((res) => {
           setSavedMovies(res);
+          setCurrentSaveMovies(res);
         })
         .catch((err) => {
           console.log(err);
@@ -217,26 +224,25 @@ function App() {
 
   function handleSearchSavedMovie(word) {
     const startMovArr = savedMovies;
-    // здесь должен быть поиск
-    let resArray = searching(startMovArr, word);
+    const resArray = searching(startMovArr, word);
     if (resArray.length === 0) {
       setEmpty(true);
     }
-    setSavedMovies(resArray);
+    setCurrentSaveMovies(resArray);
   }
 
   function handleSearchShortSavedButton(valCheckBox) {
     if (valCheckBox) { // для тру
       let shoortFiltredArray = [];
-      if (savedMovies.length > 0) {
-        shoortFiltredArray = searchShort(savedMovies);
+      if (currentSaveMovies.length > 0) {
+        shoortFiltredArray = searchShort(currentSaveMovies);
       }
       if (shoortFiltredArray.length > 0) {
-        setFiltredArray(savedMovies);
-        setSavedMovies(shoortFiltredArray);
+        setFiltredArray(currentSaveMovies);
+        setCurrentSaveMovies(shoortFiltredArray);
       }
     } else {
-      setSavedMovies(filtredArray);
+      setCurrentSaveMovies(filtredArray);
     }
   }
 
@@ -298,7 +304,7 @@ function App() {
             saveMovie={handlerSaveMovie} delMovie={handlerToggleSaveMovie} empty={empty} filterShort={handleSearchShortButton} />
 
           <ProtectedRoute path="/saved-movies" isLogged={isLogged} component={Movies} hide={'movies'} onSearch={handleSearchSavedMovie}
-            savedMovies={savedMovies} delMovie={handlerDeleteMovie} filterShort={handleSearchShortSavedButton} />
+            savedMovies={savedMovies} delMovie={handlerDeleteMovie} filterShort={handleSearchShortSavedButton} currentSaveMovies={currentSaveMovies} />
 
           <ProtectedRoute path="/profile" isLogged={isLogged} component={Profile} onEditProfile={editProfile} signOut={handleSignOut} message={message} />
 

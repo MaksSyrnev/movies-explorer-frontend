@@ -7,7 +7,7 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
 function Movies(props) {
-  const { hide, moviesData, empty, onSearch, preloader, errloader, savedMovies, saveMovie, delMovie } = props;
+  const { hide, moviesData, empty, onSearch, preloader, errloader, savedMovies, saveMovie, delMovie, currentSaveMovies } = props;
   const [countCard, setCountCard] = React.useState({ repeat: 0, add: 0 });
 
   React.useEffect(() => {
@@ -48,7 +48,7 @@ function Movies(props) {
       <section className="movies">
         <SearchForm onSearch={onSearch} filterShort={props.filterShort} />
         {hide === "movies"
-          ? <SavedMovies savedMovies={savedMovies} delMovie={delMovie} />
+          ? <SavedMovies savedMovies={savedMovies} delMovie={delMovie} currentSaveMovies={currentSaveMovies} />
           : <MoviesCardList moviesData={moviesData} preloader={preloader} errloader={errloader} saveMovie={saveMovie} delMovie={delMovie} count={countCard} empty={empty} savedMovies={savedMovies} />
         }
       </section>

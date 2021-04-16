@@ -65,6 +65,8 @@ function Profile(props) {
       } else {
         setIsValidName(true);
       }
+    } else {
+      setIsValidName(false);
     }
   }
 

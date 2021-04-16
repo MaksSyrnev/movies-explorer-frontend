@@ -17,7 +17,6 @@ function MoviesCardList(props) {
     let currentCount = moviesRender.length + count.add;
     let mArr = moviesData.slice(0, currentCount);
     setMoviesRender(mArr);
-    console.log(currentCount, moviesData.length);
   }
 
   function isSaved(id) {
