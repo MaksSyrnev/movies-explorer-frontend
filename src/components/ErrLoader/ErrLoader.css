@@ -1,0 +1,12 @@
+.error-loader {
+  font-weight: 400;
+  font-style: normal;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 18px;
+  color: #000000;
+}
+
+.error-loader_hide {
+  display: none;
+}

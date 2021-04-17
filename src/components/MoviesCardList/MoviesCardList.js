@@ -1,64 +1,45 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './MoviesCardList.css';
-import MoviesCard from '../MoviesCard/MoviesCard';
-import imgPath1 from '../../images/pic1.png';
-import imgPath2 from '../../images/pic2.png';
-import imgPath3 from '../../images/pic3.png';
-import imgPath4 from '../../images/pic4.png';
-import imgPath5 from '../../images/pic5.png';
-import imgPath6 from '../../images/pic6.png';
-import imgPath7 from '../../images/pic7.png';
-
-const cardsData = [{
-  id: 1,
-  title: '33 слова о дизайне',
-  time: '1ч 42м',
-  imgPath: imgPath1,
-  saved: true,
-}, {
-  id: 2,
-  title: 'Киноальманах «100 лет дизайна»',
-  time: '1ч 42м',
-  imgPath: imgPath2,
-}, {
-  id: 3,
-  title: 'В погоне за Бенкси',
-  time: '1ч 42м',
-  imgPath: imgPath3,
-  saved: true,
-}, {
-  id: 4,
-  title: 'Баския: Взрыв реальности',
-  time: '1ч 42м',
-  imgPath: imgPath4,
-}, {
-  id: 5,
-  title: 'Бег это свобода',
-  time: '1ч 42м',
-  imgPath: imgPath5,
-}, {
-  id: 6,
-  title: 'Книготорговцы',
-  time: '1ч 42м',
-  imgPath: imgPath6,
-}, {
-  id: 7,
-  title: 'Когда я думаю о Германии ночью',
-  time: '1ч 42м',
-  imgPath: imgPath7,
-}];
+import Preloader from '../Preloader/Preloader';
+import MovieCard from '../MovieCard/MovieCard';
+import ErrLoader from '../ErrLoader/ErrLoader';
 
 function MoviesCardList(props) {
+  const { preloader, errloader, moviesData, saveMovie, delMovie, count, empty, savedMovies } = props;
+  const [moviesRender, setMoviesRender] = React.useState([])
+
+  useEffect(() => {
+    const firstArray = moviesData.slice(0, count.repeat);
+    setMoviesRender(firstArray);
+  }, [count.repeat, moviesData]);
+
+  function handleAddMore() {
+    let currentCount = moviesRender.length + count.add;
+    let mArr = moviesData.slice(0, currentCount);
+    setMoviesRender(mArr);
+  }
+
+  function isSaved(id) {
+    return savedMovies.some((item) => {
+      return item.movieId === id;
+    });
+  }
+
   return (
-    <section className={`movies-cards ${props.hide ? 'movies-cards_hide' : ''}`}>
-      <ul className="movies-cards__list">
-        {/* <!-- сюда будет грузится массив карточек --> */}
-        {cardsData.map((item) => (
-          <MoviesCard key={item.id} title={item.title} time={item.time} imgPath={item.imgPath} saved={item.saved} del={false} />
-        )
-        )}
-      </ul>
-      <button className="movies-cards__button_more">Ещё</button>
+    <section className="movies-cards">
+      <Preloader hide={preloader} />
+      <ErrLoader hide={errloader} />
+      { empty && <p>Ничего не найдено</p>}
+      { (moviesData.length > 0) &&
+        <ul className="movies-cards__list">
+          {moviesRender.map((item) => (
+            <MovieCard key={item.movieId} title={item.nameRU} time={item.duration} imgPath={item.image} trailer={item.trailer}
+              del={false} saveMovie={saveMovie} delMovie={delMovie} movieData={item} saved={isSaved(item.movieId)} />
+          )
+          )}
+        </ul>
+      }
+      { (moviesData.length > moviesRender.length) && <button className="movies-cards__button_more" onClick={handleAddMore} >Ещё</button>}
     </section>
   );
 }

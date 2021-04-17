@@ -17,7 +17,7 @@ function Navigation(props) {
   return (
     <nav className="navigation">
 
-      <div className={`navigation__main-conteiner ${props.back ? '' : 'navigation__main-conteiner_hide'}`}>
+      <div className={`navigation__main-conteiner ${props.isLogged ? 'navigation__main-conteiner_hide' : ''}`}>
         <Link to="/signup" className="navigation__main-button_link">
           <button className="navigation__main-button navigation__main-button_dark" >Регистрация</button>
         </Link>
@@ -26,7 +26,7 @@ function Navigation(props) {
         </Link>
       </div>
 
-      <div className={`navigation__movies-conteiner ${props.back ? 'navigation__movies-conteiner_hide' : ''} `} >
+      <div className={`navigation__movies-conteiner ${props.isLogged ? '' : 'navigation__movies-conteiner_hide'} `} >
 
         <Link to="/movies" className="navigation__movies-button_link">
           <button className="navigation__movies-button" onClick={handleClose}>Фильмы</button>

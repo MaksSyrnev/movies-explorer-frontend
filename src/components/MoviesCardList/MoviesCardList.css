@@ -1,6 +1,7 @@
 .movies-cards {
   margin: 0 auto;
   padding: 60px 0;
+  min-height: 35vh;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;

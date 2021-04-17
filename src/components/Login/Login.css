@@ -37,7 +37,7 @@
 
 .form-login__input {
   display: block;
-  margin: 0 auto 24px;
+  margin: 0 auto 4px;
   padding: 0;
   width: 100%;
   height: 32px;
@@ -55,6 +55,21 @@
   border-bottom: 1px solid #2be080;
 }
 
+.form-login__err {
+  display: block;
+  margin: 0 auto 10px;
+  padding: 0;
+  color: #ee3465;
+  text-align: center;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+}
+
+.form-login__err_hide {
+  visibility: hidden;
+}
+
 .form-login__button {
   margin: 198px auto 16px;
   border-radius: 3px;
@@ -69,6 +84,14 @@
 .form-login__button:hover {
   cursor: pointer;
   opacity: 0.8;
+}
+
+.form-login__button_disabled {
+  margin: 198px auto 16px;
+  border-radius: 3px;
+  width: 100%;
+  height: 45px;
+  border: none;
 }
 
 .form-login__text {
