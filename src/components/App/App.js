@@ -237,10 +237,8 @@ function App() {
       if (currentSaveMovies.length > 0) {
         shoortFiltredArray = searchShort(currentSaveMovies);
       }
-      if (shoortFiltredArray.length > 0) {
-        setFiltredArray(currentSaveMovies);
-        setCurrentSaveMovies(shoortFiltredArray);
-      }
+      setFiltredArray(currentSaveMovies);
+      setCurrentSaveMovies(shoortFiltredArray);
     } else {
       setCurrentSaveMovies(filtredArray);
     }
