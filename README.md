@@ -1,6 +1,4 @@
-#Frontend часть дипломного проекта Movies - Explorer
-
-
+#Frontend проекта Movies - Explorer
 
 
 ### Демо проекта выложено по адресу 
