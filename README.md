@@ -5,7 +5,3 @@
 
 ## технологии:
 ReactJS (CRA - framework), БЭМ нотация в CSS
-
-### демо проекта выложено по адресу:
-http://onemoredog.space
-
